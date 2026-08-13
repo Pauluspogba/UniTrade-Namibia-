@@ -1,10 +1,26 @@
+import { useEffect, useState } from 'react'
+import { getApiStatus } from './services/api'
+
 function App() {
+  const [apiMessage, setApiMessage] = useState('Connecting to server...')
+
+  useEffect(() => {
+    getApiStatus()
+      .then((data) => {
+        setApiMessage(data.message)
+      })
+      .catch(() => {
+        setApiMessage('Backend connection failed')
+      })
+  }, [])
+
   return (
     <div className="min-h-screen bg-gray-50">
 
       {/* Navigation */}
       <nav className="border-b bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+
           <h1 className="text-2xl font-bold text-blue-600">
             UniTrade Namibia
           </h1>
@@ -22,11 +38,13 @@ function App() {
               Login
             </button>
           </div>
+
         </div>
       </nav>
 
       {/* Hero */}
       <main>
+
         <section className="bg-blue-600 px-6 py-20 text-white">
           <div className="mx-auto max-w-5xl text-center">
 
@@ -39,8 +57,14 @@ function App() {
               laptops, textbooks, furniture and more from fellow students.
             </p>
 
+            {/* Backend status */}
+            <p className="mx-auto mt-4 text-sm text-blue-200">
+              {apiMessage}
+            </p>
+
             {/* Search */}
             <div className="mx-auto mt-8 flex max-w-2xl overflow-hidden rounded-lg bg-white">
+
               <input
                 type="text"
                 placeholder="Search for laptops, textbooks, phones..."
@@ -50,10 +74,12 @@ function App() {
               <button className="bg-gray-900 px-6 font-semibold text-white">
                 Search
               </button>
+
             </div>
 
             {/* Buttons */}
             <div className="mt-8 flex justify-center gap-4">
+
               <button className="rounded-lg bg-white px-6 py-3 font-semibold text-blue-600">
                 Browse Marketplace
               </button>
@@ -61,6 +87,7 @@ function App() {
               <button className="rounded-lg border border-white px-6 py-3 font-semibold text-white">
                 Sell an Item
               </button>
+
             </div>
 
           </div>
@@ -89,6 +116,7 @@ function App() {
           </div>
 
         </section>
+
       </main>
 
     </div>
@@ -98,7 +126,10 @@ function App() {
 function Category({ emoji, title }: { emoji: string; title: string }) {
   return (
     <div className="cursor-pointer rounded-xl border bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg">
-      <div className="text-4xl">{emoji}</div>
+
+      <div className="text-4xl">
+        {emoji}
+      </div>
 
       <h4 className="mt-4 text-xl font-semibold text-gray-900">
         {title}
@@ -107,6 +138,7 @@ function Category({ emoji, title }: { emoji: string; title: string }) {
       <p className="mt-2 text-gray-500">
         Browse {title.toLowerCase()}
       </p>
+
     </div>
   )
 }
