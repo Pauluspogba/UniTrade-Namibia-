@@ -18,7 +18,7 @@ function Login() {
       })
 
       console.log('Login successful:', data)
-
+      localStorage.setItem('token', data.token)
       alert('Login successful!')
 
       navigate('/home')

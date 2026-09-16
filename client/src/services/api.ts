@@ -25,4 +25,20 @@ export const loginUser = async (userData: {
   return response.data
 }
 
+export const createListing = async (listingData: {
+  title: string
+  price: number
+  description: string
+}) => {
+  const token = localStorage.getItem('token')
+
+  const response = await api.post('/listings', listingData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}
+
 export default api
